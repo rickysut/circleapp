@@ -16,7 +16,7 @@ export default function useJabatan() {
 
     const getJabatan = async (id) => {
         let response = await axios.get(`/api/jabatan/${id}`)
-        jabatan.value = response.data.data
+        jabatan.value = response.data.data[0]
     }
 
     const storeJabatan = async (data) => {

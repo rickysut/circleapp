@@ -13,9 +13,6 @@ class Karyawan extends Model
 
     protected $fillable = ['full_name', 'email', 'handphone', 'pob', 'dob', 'dep_id', 'jabatan_id', 'doc_id'];
 
-    public function dokumen(){
-        return $this->belongsTo(Dokumen::class, 'doc_id', 'id');
-    }
-
+   
     
 }

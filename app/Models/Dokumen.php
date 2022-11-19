@@ -10,8 +10,6 @@ class Dokumen extends Model
 {
     use HasFactory, SoftDeletes;
 
-    //protected $kind = ['Karyawan', 'Departemen', 'Jabatan'];
-    
     protected $fillable = ['name', 'filepath'];
     
 }

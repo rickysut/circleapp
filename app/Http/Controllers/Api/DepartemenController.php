@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Departemen;
 use App\Http\Resources\DepartemenResource;
 use App\Http\Requests\DepartemenRequest;
+use Illuminate\Support\Facades\DB;
 
 class DepartemenController extends Controller
 {
@@ -16,7 +17,13 @@ class DepartemenController extends Controller
      */
     public function index()
     {
-        return DepartemenResource::collection(Departemen::all());
+        $res = DB::select(DB::raw('select dep.*, doc.filepath
+        from departemens dep 
+        left JOIN dokumens doc on dep.doc_id = doc.id 
+        where dep.deleted_at is null'));
+        $result = array('data' => $res);
+        return collect($result);
+        
     }
 
     /**
@@ -40,7 +47,13 @@ class DepartemenController extends Controller
      */
     public function show(Departemen $departemen)
     {
-        return new DepartemenResource($departemen);
+        $id = $departemen->id;
+        $res = DB::select(DB::raw('select dep.* , doc.filepath
+        from departemens dep 
+        left JOIN dokumens doc on dep.doc_id = doc.id 
+        where dep.deleted_at is null and dep.id = '. $id ));
+        $result = array('data' => $res);
+        return collect($result);
     }
 
     /**

@@ -16,7 +16,7 @@ export default function useDepartemen() {
 
     const getDepartemen = async (id) => {
         let response = await axios.get(`/api/departemen/${id}`)
-        departemen.value = response.data.data
+        departemen.value = response.data.data[0]
     }
 
     const storeDepartemen = async (data) => {

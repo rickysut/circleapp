@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            //$table->enum('kind', ['Karyawan','Departemen', 'Jabatan']);
             $table->string('filepath');
             $table->timestamps();
             $table->softDeletes();

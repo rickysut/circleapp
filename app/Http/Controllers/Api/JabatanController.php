@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Jabatan;
 use App\Http\Requests\JabatanRequest;
 use App\Http\Resources\JabatanResource;
+use Illuminate\Support\Facades\DB;
 
 class JabatanController extends Controller
 {
@@ -16,7 +17,12 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        return JabatanResource::collection(Jabatan::all());
+        $res = DB::select(DB::raw('select jab.*, doc.filepath
+        from jabatans jab 
+        left JOIN dokumens doc on jab.doc_id = doc.id 
+        where jab.deleted_at is null'));
+        $result = array('data' => $res);
+        return collect($result);
     }
 
     /**
@@ -40,7 +46,13 @@ class JabatanController extends Controller
      */
     public function show(Jabatan $jabatan)
     {
-        return new JabatanResource($jabatan);
+        $id = $jabatan->id;
+        $res = DB::select(DB::raw('select jab.* , doc.filepath
+        from jabatans jab 
+        left JOIN dokumens doc on jab.doc_id = doc.id 
+        where jab.deleted_at is null and jab.id = '. $id ));
+        $result = array('data' => $res);
+        return collect($result);
     }
 
     /**
