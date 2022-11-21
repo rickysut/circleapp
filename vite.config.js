@@ -18,7 +18,11 @@ export default defineConfig({
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false,
-                }
+                },
+                // compilerOptions: {
+                //     // treat all tags with a dash as custom elements
+                //     isCustomElement: (tag) => tag.includes('Datepicker', 'FileUpload')
+                //   }
             },
         })
     ],

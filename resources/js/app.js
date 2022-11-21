@@ -12,14 +12,14 @@ import router from './router'
 
 import KaryawanIndex from '@/components/karyawan/KaryawanIndex.vue';
 import DepartemenIndex from '@/components/departemen/DepartemenIndex.vue';
-// import DatePicker from "@/components//DatePicker.vue";
+// import FileUpload from "@/components/FileUploadComponent.vue";
 
 
 createApp({
     components: {
         KaryawanIndex,
-        DepartemenIndex
-        // DatePicker
+        DepartemenIndex,
+        // FileUpload
     }
 }).use(router).mount('#app')
 

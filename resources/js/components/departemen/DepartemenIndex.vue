@@ -1,3 +1,14 @@
+<script>
+    export default {
+
+        methods: {
+            download (urlnya) {
+                const url = urlnya;
+                window.location.href = url;
+            }
+        },
+    };
+</script>
 <template>
     <div class="flex mb-4 place-content-end">
         <div class="px-4 py-2 text-white rounded-l-md rounded-r-md border bg-indigo-600 cursor-pointer hover:bg-indigo-700">
@@ -32,6 +43,9 @@
                     </td>
                     <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
                         {{ item.filepath }}
+                        <button class="mt-1 py-1 px-2 text-sm font-medium text-gray-900 bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+                            @click="download(item.filepath)">...
+                        </button>
                     </td>
                     
                     <td class="inline-flex text-right rounded-md shadow-sm mr-2" role="group" >

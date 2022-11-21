@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dokumen;
 use App\Http\Requests\DokumenRequest;
 use App\Http\Resources\DokumenResource;
+use Illuminate\Http\Request;
 
 class DokumenController extends Controller
 {
@@ -69,4 +70,6 @@ class DokumenController extends Controller
 
         return response()->noContent();
     }
+
+    
 }

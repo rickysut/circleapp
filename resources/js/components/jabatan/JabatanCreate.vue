@@ -1,3 +1,26 @@
+<script>
+import { ref } from 'vue'
+export default {
+    setup(){
+        const doc_id = ref(null)
+        return {
+            doc_id
+        }
+    },
+    data() {
+        return {
+            myvalue: 0,
+        };
+    },
+    methods: {
+        handleId(event){
+            this.myvalue = event;
+        }    
+    },
+    
+
+}
+</script>
 <template>
     <div v-if="errors">
         <div v-for="(v, k) in errors" :key="k" class="bg-red-400 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0">
@@ -8,6 +31,7 @@
     </div>
 
     <form class="space-y-6" @submit.prevent="saveJabatan">
+        <input type="hidden" ref="doc_id" v-model="myvalue">
         <div class="space-y-4 rounded-md shadow-sm columns-2">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Nama Jabatan</label>
@@ -20,10 +44,9 @@
 
             <div>
                 <label for="doc_id" class="block text-sm font-medium text-gray-700">Dokumen</label>
+                
                 <div class="mt-1">
-                    <input type="text" name="doc_id" id="doc_id"
-                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="form.doc_id">
+                    <FileUpload   v-on:getId="handleId"></FileUpload>
                 </div>
             </div>
 
@@ -44,21 +67,19 @@
 <script setup>
 import useJabatan from '../../composables/jabatan'
 import { reactive } from 'vue'
+import FileUpload from "@/components/FileUploadComponent.vue";
+
+const doc_id = ref(null)
 
 const form = reactive({
     name: '',
-    doc_id: '',
-    handphone: '',
-    pob: '',
-    dob: '',
-    dep_id: '',
-    jabatan_id: '',
     doc_id: ''
 })
 
 const { errors, storeJabatan } = useJabatan()
 
 const saveJabatan = async () => {
+    form.doc_id = doc_id.value.value;
     await storeJabatan({ ...form })
 }
 </script>

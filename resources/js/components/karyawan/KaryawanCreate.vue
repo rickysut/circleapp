@@ -1,3 +1,27 @@
+<script>
+import { ref } from 'vue'
+export default {
+    setup(){
+        const doc_id = ref(null)
+        return {
+            doc_id
+        }
+    },
+    data() {
+        return {
+            myvalue: 0,
+        };
+    },
+    methods: {
+        handleId(event){
+            this.myvalue = event;
+        }    
+    },
+    
+
+}
+</script>
+
 <template>
     <div v-if="errors">
         <div v-for="(v, k) in errors" :key="k" class="bg-red-400 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0">
@@ -8,6 +32,7 @@
     </div>
 
     <form class="space-y-6" @submit.prevent="saveKaryawan">
+        <input type="hidden" ref="doc_id" v-model="myvalue">
         <div class="space-y-4 rounded-md shadow-sm columns-2">
             <div>
                 <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -47,12 +72,9 @@
             <div>
                 <label for="dob" class="block text-sm font-medium text-gray-700">Tanggal lahir</label>
                 <div class="mt-1">
-                    <div class="mt-1">
-                        <Datepicker name="dob" id="dob" v-model="form.dob" :enable-time-picker="false" :format="format" :previewFormat="format"  />
-                    </div>
-                    <!-- <input type="text" name="dob" id="dob"
-                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="form.dob"> -->
+                    
+                    <Datepicker name="dob" id="dob" v-model="form.dob" :enable-time-picker="false" :format="format" :previewFormat="format"  />
+                    
                 </div>
             </div>
             <div>
@@ -82,10 +104,9 @@
             </div>
             <div>
                 <label for="doc_id" class="block text-sm font-medium text-gray-700">Dokumen</label>
+                
                 <div class="mt-1">
-                    <input type="text" name="doc_id" id="doc_id"
-                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            v-model="form.doc_id">
+                    <FileUpload   v-on:getId="handleId"></FileUpload>
                 </div>
             </div>
         </div>
@@ -101,20 +122,25 @@
     </form>
 </template>
 
+
 <script setup>
 
 import useKaryawan from '@/composables/karyawan'
 import useDepartemen from '@/composables/departemen'
 import useJabatan from '@/composables/jabatan'
+import FileUpload from "@/components/FileUploadComponent.vue";
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 import { onMounted } from 'vue';
 import { reactive } from 'vue'
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+
 
 const { errors, storeKaryawan} = useKaryawan()
 const { departemens, getDepartemens } = useDepartemen()
 const { jabatans, getJabatans } = useJabatan()
+
+const doc_id = ref(null)
 
 const form = reactive({
     full_name: '',
@@ -135,14 +161,17 @@ const format = (date) => {
     return `${day}/${month}/${year}`;
 }
 
-
 onMounted(() => {
         getDepartemens()
         getJabatans()
-    }
-)
+    })
 
 const saveKaryawan = async () => {
+    form.doc_id = doc_id.value.value;
     await storeKaryawan({ ...form })
 }
+        
+
+
 </script>
+

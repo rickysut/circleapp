@@ -38,3 +38,4 @@ Route::get('dokumen/{dokumen}/edit', 'App\Http\Controllers\Api\DokumenController
 Route::post('dokumen', 'App\Http\Controllers\Api\DokumenController@store');
 Route::patch('dokumen/{dokumen}', 'App\Http\Controllers\Api\DokumenController@update');
 Route::delete('dokumen/{dokumen}', 'App\Http\Controllers\Api\DokumenController@destroy');
+
